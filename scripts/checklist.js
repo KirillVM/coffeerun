@@ -14,8 +14,17 @@
         }
     }
 
+    CheckList.prototype.addClickHandler = function (fn) {
+        this.$element.on('click', 'input', function (event){
+            var email = event.target.value;
+            this.removeRow(email);
+            fn(email)
+        }.bind(this));
+    }
+
     function Row (coffeeOrder){
         var $div = $('<div></div>', {
+            'style' : 'font-size : small', 
             'data-coffee-order': 'checkbox',
             'class': 'checkbox'
         });
@@ -24,6 +33,7 @@
 
         var $checkbox = $('<input></input>',{
             type: 'checkbox',
+            
             value: coffeeOrder.emailAddress
         });
 
@@ -43,9 +53,15 @@
     }
 
     CheckList.prototype.addRow = function (coffeeOrder){
+        this.removeRow(coffeeOrder.emailAddress)
         var rowElement = new Row(coffeeOrder);
-
         this.$element.append(rowElement.$element);
+    }
+
+    CheckList.prototype.removeRow = function (email) {
+        this.$element.find('[value = "'+email+'"]')
+                     .closest('[data-coffee-order = "checkbox"]')
+                     .remove();
     }
 
     App.CheckList = CheckList;

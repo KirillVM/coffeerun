@@ -15,6 +15,7 @@
     var checkList = new CheckList(CHECKLIST_SELECTOR);
     var formHandler = new FormHandler(FORM_SELECTOR);
     window.formHandler = formHandler;
+    checkList.addClickHandler(myTruck.deliverOrder.bind(myTruck))
     //formHandler.addSubmitHandler(myTruck.createOrder.bind(myTruck)); без check box
     formHandler.addSubmitHandler(function (data) { 
         myTruck.createOrder.call(myTruck,data);
